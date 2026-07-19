@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import Head from "next/head";
-import Image from "next/image";
 import AppShell from "@/components/owner/AppShell";
+import LazyImage from "@/components/owner/LazyImage";
 import PageHeader from "@/components/owner/PageHeader";
 import RiderFormSheet from "@/components/owner/profile/RiderFormSheet";
 import { MdAdd } from "react-icons/md";
@@ -58,7 +58,7 @@ export default function RidersPage() {
             >
               <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-full bg-canvas">
                 {rider.photoUrl ? (
-                  <Image src={rider.photoUrl} alt="" fill sizes="48px" className="object-cover" />
+                  <LazyImage src={rider.photoUrl} alt="" sizes="48px" className="object-cover" />
                 ) : (
                   <span className="flex h-full w-full items-center justify-center text-sm font-semibold text-muted">
                     {rider.name.slice(0, 1).toUpperCase()}

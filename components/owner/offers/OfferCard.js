@@ -1,4 +1,4 @@
-import Image from "next/image";
+import LazyImage from "@/components/owner/LazyImage";
 import { MdArrowUpward, MdArrowDownward } from "react-icons/md";
 
 export default function OfferCard({ offer, isFirst, isLast, onOpen, onMoveUp, onMoveDown }) {
@@ -6,7 +6,7 @@ export default function OfferCard({ offer, isFirst, isLast, onOpen, onMoveUp, on
     <div className="flex items-center gap-3 rounded-2xl border border-line bg-surface p-3">
       <button type="button" onClick={onOpen} className="relative h-16 w-24 shrink-0 overflow-hidden rounded-xl bg-canvas">
         {offer.imageUrl ? (
-          <Image src={offer.imageUrl} alt="" fill sizes="96px" className="object-cover" />
+          <LazyImage src={offer.imageUrl} alt="" sizes="96px" className="object-cover" />
         ) : (
           <span className="flex h-full w-full items-center justify-center text-[10px] text-muted">No photo</span>
         )}

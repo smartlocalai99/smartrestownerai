@@ -1,4 +1,4 @@
-import Image from "next/image";
+import LazyImage from "@/components/owner/LazyImage";
 import { MdChevronRight } from "react-icons/md";
 
 export default function ItemRow({ item, onOpen }) {
@@ -10,7 +10,7 @@ export default function ItemRow({ item, onOpen }) {
     >
       <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-xl bg-canvas">
         {item.imageUrl ? (
-          <Image src={item.imageUrl} alt="" fill sizes="56px" className="object-cover" />
+          <LazyImage src={item.imageUrl} alt="" sizes="56px" className="object-cover" />
         ) : (
           <span className="flex h-full w-full items-center justify-center text-[10px] text-muted">No photo</span>
         )}

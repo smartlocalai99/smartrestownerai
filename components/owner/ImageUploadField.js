@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import Image from "next/image";
+import LazyImage from "@/components/owner/LazyImage";
 import { MdOutlineAddPhotoAlternate, MdClose } from "react-icons/md";
 import { uploadRestaurantImage, deleteRestaurantImage } from "@/lib/storage.mjs";
 
@@ -45,7 +45,7 @@ export default function ImageUploadField({ value, onChange, folder, label, aspec
       {label ? <p className="mb-1.5 text-xs font-medium uppercase tracking-wide text-muted">{label}</p> : null}
       <div className={`relative ${aspectClassName} w-full overflow-hidden rounded-2xl border border-line bg-canvas`}>
         {value ? (
-          <Image src={value} alt="" fill sizes="240px" className="object-cover" />
+          <LazyImage src={value} alt="" sizes="240px" skeletonClassName="bg-canvas" className="object-cover" />
         ) : (
           <button
             type="button"

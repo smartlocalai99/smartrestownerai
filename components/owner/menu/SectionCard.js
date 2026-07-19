@@ -1,6 +1,33 @@
 import { useState } from "react";
 import { MdExpandMore, MdOutlineEdit, MdArrowUpward, MdArrowDownward, MdAdd } from "react-icons/md";
+import useInView from "@/hooks/useInView";
 import ItemRow from "./ItemRow";
+
+function ItemRowSkeleton() {
+  return (
+    <div className="flex items-center gap-3 px-2 py-2">
+      <div className="h-14 w-14 shrink-0 animate-pulse rounded-xl bg-surface-2" />
+      <div className="flex min-w-0 flex-1 flex-col gap-2">
+        <div className="h-3.5 w-2/3 animate-pulse rounded-full bg-surface-2" />
+        <div className="h-3 w-1/3 animate-pulse rounded-full bg-surface-2" />
+      </div>
+    </div>
+  );
+}
+
+// Only mounts real item rows (and their photos) once this section scrolls
+// near the viewport, so a long menu doesn't fetch every photo up front.
+function LazyItemList({ items, onEditItem }) {
+  const [ref, isInView] = useInView({ rootMargin: "600px" });
+
+  return (
+    <div ref={ref} className="flex flex-col gap-0.5">
+      {isInView
+        ? items.map((item) => <ItemRow key={item.id} item={item} onOpen={() => onEditItem(item)} />)
+        : items.map((item) => <ItemRowSkeleton key={item.id} />)}
+    </div>
+  );
+}
 
 export default function SectionCard({
   section,
@@ -63,9 +90,7 @@ export default function SectionCard({
 
       {isExpanded ? (
         <div className="flex flex-col gap-0.5 px-2 pb-2">
-          {section.items.map((item) => (
-            <ItemRow key={item.id} item={item} onOpen={() => onEditItem(item)} />
-          ))}
+          <LazyItemList items={section.items} onEditItem={onEditItem} />
 
           <button
             type="button"

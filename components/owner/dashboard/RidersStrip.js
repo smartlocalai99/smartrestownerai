@@ -1,5 +1,5 @@
-import Image from "next/image";
 import Link from "next/link";
+import LazyImage from "@/components/owner/LazyImage";
 import StatusPill from "@/components/owner/StatusPill";
 
 const STATUS_TONE = { available: "success", busy: "accent", offline: "muted" };
@@ -25,7 +25,7 @@ export default function RidersStrip({ riders }) {
             <li key={rider.id} className="flex items-center gap-3">
               <div className="relative h-9 w-9 shrink-0 overflow-hidden rounded-full bg-canvas">
                 {rider.photoUrl ? (
-                  <Image src={rider.photoUrl} alt="" fill sizes="36px" className="object-cover" />
+                  <LazyImage src={rider.photoUrl} alt="" sizes="36px" className="object-cover" />
                 ) : (
                   <span className="flex h-full w-full items-center justify-center text-xs font-semibold text-muted">
                     {rider.name.slice(0, 1).toUpperCase()}
