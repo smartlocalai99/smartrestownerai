@@ -1,0 +1,76 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: var(--font-plus-jakarta), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-fraunces), ui-serif, Georgia, serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
+
+  --color-canvas: #faf9f7;
+  --color-surface: #ffffff;
+  --color-surface-2: #f1efeb;
+  --color-ink: #211c16;
+  --color-muted: #746a5d;
+  --color-line: #e7e2d9;
+  --color-accent: #a3610f;
+  --color-accent-dim: #8a5209;
+  --color-success: #3f7a5c;
+  --color-danger: #b23b2e;
+}
+
+html,
+body,
+#__next {
+  height: 100%;
+  background: var(--color-canvas);
+}
+
+body {
+  color: var(--color-ink);
+  font-feature-settings: "tnum" 1, "cv11" 1;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+::selection {
+  background: var(--color-accent);
+  color: var(--color-surface);
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+.input {
+  width: 100%;
+  border-radius: 0.75rem;
+  border: 1px solid var(--color-line);
+  background: var(--color-surface);
+  padding: 0.625rem 0.875rem;
+  font-size: 0.875rem;
+  color: var(--color-ink);
+  outline: none;
+}
+.input::placeholder {
+  color: color-mix(in oklab, var(--color-muted) 65%, transparent);
+}
+.input:focus {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--color-accent) 16%, transparent);
+}
+
+.scrollbar-none {
+  scrollbar-width: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+.safe-top {
+  padding-top: env(safe-area-inset-top, 0px);
+}
