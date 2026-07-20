@@ -3,6 +3,10 @@ import { getSupabase } from "@/lib/supabaseClient";
 
 const OwnerAuthContext = createContext(null);
 
+// There is exactly one owner account for this restaurant. The login screen
+// only ever asks for a password — this is the fixed identity behind it.
+const OWNER_EMAIL = "owner@smartrestownerai.app";
+
 async function checkIsOwner(client, userId) {
   const { data, error } = await client
     .from("restaurant_owners")
@@ -11,14 +15,6 @@ async function checkIsOwner(client, userId) {
     .maybeSingle();
   if (error) throw error;
   return Boolean(data);
-}
-
-async function claimOwnershipIfUnclaimed(client, userId) {
-  const { error } = await client.from("restaurant_owners").insert({ user_id: userId });
-  // A unique-violation or RLS-denied insert just means someone already claimed it first.
-  if (error && error.code !== "23505" && !error.message?.includes("row-level security")) {
-    throw error;
-  }
 }
 
 export function OwnerAuthProvider({ children }) {
@@ -59,30 +55,10 @@ export function OwnerAuthProvider({ children }) {
     };
   }, [client, refreshOwnerStatus]);
 
-  const signUp = useCallback(
-    async (email, password) => {
-      const { data, error } = await client.auth.signUp({ email, password });
-      if (error) throw error;
-
-      if (!data.session) {
-        return { needsEmailConfirmation: true };
-      }
-
-      await claimOwnershipIfUnclaimed(client, data.session.user.id);
-      await refreshOwnerStatus(data.session);
-      return { needsEmailConfirmation: false };
-    },
-    [client, refreshOwnerStatus]
-  );
-
   const signIn = useCallback(
-    async (email, password) => {
-      const { data, error } = await client.auth.signInWithPassword({ email, password });
-      if (error) throw error;
-      const owned = await checkIsOwner(client, data.session.user.id);
-      if (!owned) {
-        await claimOwnershipIfUnclaimed(client, data.session.user.id);
-      }
+    async (password) => {
+      const { data, error } = await client.auth.signInWithPassword({ email: OWNER_EMAIL, password });
+      if (error) throw new Error("Incorrect password.");
       await refreshOwnerStatus(data.session);
     },
     [client, refreshOwnerStatus]
@@ -99,11 +75,10 @@ export function OwnerAuthProvider({ children }) {
       isOwner,
       isLoggedIn: Boolean(session?.user),
       isHydrated,
-      signUp,
       signIn,
       signOut,
     }),
-    [session, isOwner, isHydrated, signUp, signIn, signOut]
+    [session, isOwner, isHydrated, signIn, signOut]
   );
 
   return <OwnerAuthContext.Provider value={value}>{children}</OwnerAuthContext.Provider>;
