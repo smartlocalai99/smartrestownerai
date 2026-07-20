@@ -4,7 +4,7 @@ import { useOwnerAuth } from "@/context/OwnerAuthContext";
 
 export default function useRequireOwnerAuth() {
   const router = useRouter();
-  const { isLoggedIn, isOwner, isHydrated } = useOwnerAuth();
+  const { isLoggedIn, isHydrated } = useOwnerAuth();
 
   useEffect(() => {
     if (isHydrated && !isLoggedIn) {
@@ -12,5 +12,5 @@ export default function useRequireOwnerAuth() {
     }
   }, [isHydrated, isLoggedIn, router]);
 
-  return { isReady: isHydrated && isLoggedIn && isOwner, isHydrated, isLoggedIn, isOwner };
+  return { isReady: isHydrated && isLoggedIn, isHydrated, isLoggedIn };
 }
