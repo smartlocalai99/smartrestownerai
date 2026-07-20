@@ -18,7 +18,7 @@ export default function BottomSheet({ isOpen, onClose, title, children }) {
         >
           <motion.div
             key="sheet"
-            className="safe-bottom max-h-[88vh] w-full max-w-md overflow-y-auto rounded-t-3xl border-t border-line bg-surface"
+            className="shadow-soft-lg safe-bottom max-h-[88vh] w-full max-w-md overflow-y-auto rounded-t-3xl border-t border-line/60 bg-surface"
             style={{ willChange: "transform" }}
             initial={{ y: "100%" }}
             animate={{ y: 0 }}

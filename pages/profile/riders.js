@@ -1,10 +1,11 @@
 import { useCallback, useEffect, useState } from "react";
 import Head from "next/head";
 import AppShell from "@/components/owner/AppShell";
+import EmptyState from "@/components/owner/EmptyState";
 import LazyImage from "@/components/owner/LazyImage";
 import PageHeader from "@/components/owner/PageHeader";
 import RiderFormSheet from "@/components/owner/profile/RiderFormSheet";
-import { MdAdd } from "react-icons/md";
+import { MdAdd, MdOutlineTwoWheeler } from "react-icons/md";
 import { listRiders, createRider, updateRider, deleteRider } from "@/lib/ridersData.mjs";
 
 const STATUS_TONE = { available: "text-success", busy: "text-accent", offline: "text-muted" };
@@ -48,13 +49,17 @@ export default function RidersPage() {
         {isLoading ? (
           <p className="py-8 text-center text-sm text-muted">Loading riders…</p>
         ) : riders.length === 0 ? (
-          <p className="py-8 text-center text-sm text-muted">No riders added yet.</p>
+          <EmptyState
+            icon={MdOutlineTwoWheeler}
+            title="No riders added yet"
+            message="Add your delivery riders so the dashboard can show who's available."
+          />
         ) : (
           riders.map((rider) => (
             <button
               key={rider.id}
               onClick={() => setSheet(rider)}
-              className="flex items-center gap-3 rounded-2xl border border-line bg-surface p-3 text-left"
+              className="shadow-soft flex items-center gap-3 rounded-2xl border border-line/60 bg-surface p-3 text-left transition-colors active:bg-surface-2"
             >
               <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-full bg-canvas">
                 {rider.photoUrl ? (
@@ -81,9 +86,12 @@ export default function RidersPage() {
         <button
           type="button"
           onClick={() => setSheet({})}
-          className="flex items-center justify-center gap-1.5 rounded-2xl border border-dashed border-line py-3 text-sm font-medium text-muted"
+          className="flex items-center justify-center gap-2 rounded-2xl border border-dashed border-line py-3 text-sm font-medium text-accent transition-colors active:bg-accent/5"
         >
-          <MdAdd size={18} /> Add rider
+          <span className="flex h-6 w-6 items-center justify-center rounded-full bg-accent/12">
+            <MdAdd size={16} />
+          </span>
+          Add rider
         </button>
       </div>
 

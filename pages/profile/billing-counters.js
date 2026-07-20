@@ -1,9 +1,10 @@
 import { useCallback, useEffect, useState } from "react";
 import Head from "next/head";
 import AppShell from "@/components/owner/AppShell";
+import EmptyState from "@/components/owner/EmptyState";
 import PageHeader from "@/components/owner/PageHeader";
 import CounterFormSheet from "@/components/owner/profile/CounterFormSheet";
-import { MdAdd, MdChevronRight } from "react-icons/md";
+import { MdAdd, MdChevronRight, MdOutlinePointOfSale } from "react-icons/md";
 import {
   listBillingCounters,
   createBillingCounter,
@@ -54,13 +55,17 @@ export default function BillingCountersPage() {
         {isLoading ? (
           <p className="py-8 text-center text-sm text-muted">Loading…</p>
         ) : counters.length === 0 ? (
-          <p className="py-8 text-center text-sm text-muted">No billing counter logins yet.</p>
+          <EmptyState
+            icon={MdOutlinePointOfSale}
+            title="No billing counters yet"
+            message="Add a login for each front-of-house counter so staff can bill orders."
+          />
         ) : (
           counters.map((counter) => (
             <button
               key={counter.id}
               onClick={() => setSheet(counter)}
-              className="flex items-center gap-3 rounded-2xl border border-line bg-surface p-3.5 text-left"
+              className="shadow-soft flex items-center gap-3 rounded-2xl border border-line/60 bg-surface p-3.5 text-left transition-colors active:bg-surface-2"
             >
               <div className="min-w-0 flex-1">
                 <p className={`truncate text-sm font-medium ${counter.isActive ? "text-ink" : "text-muted"}`}>
@@ -68,7 +73,11 @@ export default function BillingCountersPage() {
                 </p>
                 <p className="font-mono text-xs text-muted">@{counter.username}</p>
               </div>
-              {!counter.isActive ? <span className="text-xs text-danger">Disabled</span> : null}
+              {!counter.isActive ? (
+                <span className="rounded-full bg-danger/10 px-2 py-0.5 text-xs font-medium text-danger">
+                  Disabled
+                </span>
+              ) : null}
               <MdChevronRight className="shrink-0 text-muted" size={20} />
             </button>
           ))
@@ -77,9 +86,12 @@ export default function BillingCountersPage() {
         <button
           type="button"
           onClick={() => setSheet({})}
-          className="flex items-center justify-center gap-1.5 rounded-2xl border border-dashed border-line py-3 text-sm font-medium text-muted"
+          className="flex items-center justify-center gap-2 rounded-2xl border border-dashed border-line py-3 text-sm font-medium text-accent transition-colors active:bg-accent/5"
         >
-          <MdAdd size={18} /> Add billing counter
+          <span className="flex h-6 w-6 items-center justify-center rounded-full bg-accent/12">
+            <MdAdd size={16} />
+          </span>
+          Add billing counter
         </button>
       </div>
 

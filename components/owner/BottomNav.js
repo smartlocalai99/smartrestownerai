@@ -14,7 +14,7 @@ export default function BottomNav() {
 
   return (
     <nav className="fixed inset-x-0 bottom-0 z-40 safe-bottom">
-      <div className="mx-auto flex max-w-md items-stretch justify-between gap-1 border-t border-line bg-surface/95 px-2 pb-1 pt-2 backdrop-blur-md">
+      <div className="shadow-nav mx-auto flex max-w-md items-stretch justify-between gap-1 border-t border-line/60 bg-surface/95 px-2 pb-1 pt-2 backdrop-blur-md">
         {TABS.map(({ href, label, Icon }) => {
           const isActive = router.pathname === href || router.pathname.startsWith(`${href}/`);
           return (
@@ -24,14 +24,10 @@ export default function BottomNav() {
               className="flex flex-1 flex-col items-center gap-1 rounded-2xl py-1.5 transition-colors"
               aria-current={isActive ? "page" : undefined}
             >
-              <span
-                className={`flex h-9 w-9 items-center justify-center rounded-full transition-colors ${
-                  isActive ? "bg-accent text-canvas" : "text-muted"
-                }`}
-              >
-                <Icon size={20} />
+              <span className={`flex h-9 w-9 items-center justify-center ${isActive ? "text-accent" : "text-muted"}`}>
+                <Icon size={22} />
               </span>
-              <span className={`text-[11px] font-medium ${isActive ? "text-ink" : "text-muted"}`}>
+              <span className={`text-[11px] font-medium ${isActive ? "text-accent" : "text-muted"}`}>
                 {label}
               </span>
             </Link>

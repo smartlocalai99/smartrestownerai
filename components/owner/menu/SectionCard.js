@@ -42,12 +42,12 @@ export default function SectionCard({
   const [isExpanded, setIsExpanded] = useState(true);
 
   return (
-    <div className="rounded-2xl border border-line bg-surface">
-      <div className="flex items-center gap-2 px-3 py-3">
+    <div className="shadow-soft overflow-hidden rounded-2xl border border-line/60 bg-surface">
+      <div className="flex items-center gap-1 py-2 pl-3.5 pr-2">
         <button
           type="button"
           onClick={() => setIsExpanded((v) => !v)}
-          className="flex flex-1 items-center gap-2 text-left"
+          className="flex flex-1 items-center gap-2 py-1.5 text-left"
         >
           <MdExpandMore
             size={20}
@@ -56,48 +56,58 @@ export default function SectionCard({
           <span className={`text-sm font-semibold ${section.isActive ? "text-ink" : "text-muted"}`}>
             {section.title}
           </span>
-          <span className="text-xs text-muted">({section.items.length})</span>
-          {!section.isActive ? <span className="text-xs text-danger">Hidden</span> : null}
+          <span className="text-xs tabular text-muted">({section.items.length})</span>
+          {!section.isActive ? (
+            <span className="rounded-full bg-danger/10 px-1.5 py-0.5 text-[10px] font-medium text-danger">
+              Hidden
+            </span>
+          ) : null}
         </button>
 
-        <button
-          type="button"
-          onClick={onMoveUp}
-          disabled={isFirst}
-          className="flex h-8 w-8 items-center justify-center rounded-full text-muted disabled:opacity-30"
-          aria-label="Move section up"
-        >
-          <MdArrowUpward size={16} />
-        </button>
-        <button
-          type="button"
-          onClick={onMoveDown}
-          disabled={isLast}
-          className="flex h-8 w-8 items-center justify-center rounded-full text-muted disabled:opacity-30"
-          aria-label="Move section down"
-        >
-          <MdArrowDownward size={16} />
-        </button>
-        <button
-          type="button"
-          onClick={onEdit}
-          className="flex h-8 w-8 items-center justify-center rounded-full text-muted"
-          aria-label="Edit section"
-        >
-          <MdOutlineEdit size={17} />
-        </button>
+        <div className="flex shrink-0 items-center">
+          <button
+            type="button"
+            onClick={onMoveUp}
+            disabled={isFirst}
+            className="flex h-8 w-8 items-center justify-center rounded-full text-muted transition-colors active:bg-surface-2 disabled:opacity-25"
+            aria-label="Move section up"
+          >
+            <MdArrowUpward size={16} />
+          </button>
+          <button
+            type="button"
+            onClick={onMoveDown}
+            disabled={isLast}
+            className="flex h-8 w-8 items-center justify-center rounded-full text-muted transition-colors active:bg-surface-2 disabled:opacity-25"
+            aria-label="Move section down"
+          >
+            <MdArrowDownward size={16} />
+          </button>
+          <span className="mx-0.5 h-4 w-px bg-line" />
+          <button
+            type="button"
+            onClick={onEdit}
+            className="flex h-8 w-8 items-center justify-center rounded-full text-muted transition-colors active:bg-surface-2"
+            aria-label="Edit section"
+          >
+            <MdOutlineEdit size={17} />
+          </button>
+        </div>
       </div>
 
       {isExpanded ? (
-        <div className="flex flex-col gap-0.5 px-2 pb-2">
+        <div className="flex flex-col gap-0.5 border-t border-line/60 px-2 pb-2.5 pt-2">
           <LazyItemList items={section.items} onEditItem={onEditItem} />
 
           <button
             type="button"
             onClick={onAddItem}
-            className="flex items-center justify-center gap-1.5 rounded-2xl border border-dashed border-line py-2.5 text-sm font-medium text-muted"
+            className="mt-1 flex items-center justify-center gap-2 rounded-2xl border border-dashed border-line py-2.5 text-sm font-medium text-accent transition-colors active:bg-accent/5"
           >
-            <MdAdd size={18} /> Add item
+            <span className="flex h-5 w-5 items-center justify-center rounded-full bg-accent/12">
+              <MdAdd size={14} />
+            </span>
+            Add item
           </button>
         </div>
       ) : null}

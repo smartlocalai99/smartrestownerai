@@ -11,17 +11,19 @@ export default function HeroStat({ label, value, orderCount, trend }) {
   const showSparkline = trend && trend.length > 1;
 
   return (
-    <div className="relative overflow-hidden rounded-3xl border border-line bg-surface p-5">
-      <p className="text-xs font-medium uppercase tracking-wide text-muted">{label}</p>
-      <p className="mt-1.5 font-sans text-[2.75rem] font-semibold leading-none text-ink">
+    <div className="shadow-soft-lg relative overflow-hidden rounded-3xl border border-line/60 bg-surface p-5">
+      <div className="pointer-events-none absolute -right-10 -top-14 h-40 w-40 rounded-full bg-accent/[0.07] blur-2xl" />
+
+      <p className="relative text-xs font-medium uppercase tracking-wide text-muted">{label}</p>
+      <p className="relative mt-1.5 font-display text-[2.75rem] font-semibold leading-none tracking-tight text-ink">
         {currency.format(value)}
       </p>
-      <p className="mt-2 text-sm text-muted">
+      <p className="relative mt-2 text-sm text-muted">
         {orderCount} {orderCount === 1 ? "order" : "orders"}
       </p>
 
       {showSparkline ? (
-        <div className="mt-3 h-14 w-full">
+        <div className="relative mt-3 h-14 w-full">
           <ResponsiveContainer width="100%" height="100%">
             <AreaChart data={trend} margin={{ top: 4, right: 0, bottom: 0, left: 0 }}>
               <defs>

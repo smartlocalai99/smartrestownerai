@@ -1,10 +1,11 @@
 import { useCallback, useEffect, useState } from "react";
 import Head from "next/head";
 import AppShell from "@/components/owner/AppShell";
+import EmptyState from "@/components/owner/EmptyState";
 import PageHeader from "@/components/owner/PageHeader";
 import OfferCard from "@/components/owner/offers/OfferCard";
 import OfferFormSheet from "@/components/owner/offers/OfferFormSheet";
-import { MdAdd } from "react-icons/md";
+import { MdAdd, MdOutlineLocalOffer } from "react-icons/md";
 import { listOffers, createOffer, updateOffer, deleteOffer } from "@/lib/offersData.mjs";
 import { swapDisplayOrder } from "@/lib/reorder.mjs";
 
@@ -50,14 +51,18 @@ export default function OffersPage() {
       <PageHeader eyebrow="Manage" title="Offers" />
 
       <div className="flex flex-col gap-3 px-5">
-        <p className="text-sm text-muted">
+        <p className="text-sm leading-relaxed text-muted">
           Live offers show up in the customer app&apos;s top banner automatically, in this order.
         </p>
 
         {isLoading ? (
           <p className="py-8 text-center text-sm text-muted">Loading offers…</p>
         ) : offers.length === 0 ? (
-          <p className="py-8 text-center text-sm text-muted">No offers yet. Add your first one below.</p>
+          <EmptyState
+            icon={MdOutlineLocalOffer}
+            title="No offers yet"
+            message="Add one below and it shows up in the customer app immediately."
+          />
         ) : (
           offers.map((offer, index) => (
             <OfferCard
@@ -75,9 +80,12 @@ export default function OffersPage() {
         <button
           type="button"
           onClick={() => setSheet({})}
-          className="flex items-center justify-center gap-1.5 rounded-2xl border border-dashed border-line py-3 text-sm font-medium text-muted"
+          className="flex items-center justify-center gap-2 rounded-2xl border border-dashed border-line py-3 text-sm font-medium text-accent transition-colors active:bg-accent/5"
         >
-          <MdAdd size={18} /> Add offer
+          <span className="flex h-6 w-6 items-center justify-center rounded-full bg-accent/12">
+            <MdAdd size={16} />
+          </span>
+          Add offer
         </button>
       </div>
 

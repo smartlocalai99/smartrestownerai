@@ -1,11 +1,12 @@
 import { useCallback, useEffect, useState } from "react";
 import Head from "next/head";
 import AppShell from "@/components/owner/AppShell";
+import EmptyState from "@/components/owner/EmptyState";
 import PageHeader from "@/components/owner/PageHeader";
 import SectionCard from "@/components/owner/menu/SectionCard";
 import SectionFormSheet from "@/components/owner/menu/SectionFormSheet";
 import ItemFormSheet from "@/components/owner/menu/ItemFormSheet";
-import { MdAdd } from "react-icons/md";
+import { MdAdd, MdOutlineRestaurantMenu } from "react-icons/md";
 import {
   listMenu,
   createSection,
@@ -83,7 +84,11 @@ export default function MenuPage() {
         {isLoading ? (
           <p className="py-8 text-center text-sm text-muted">Loading menu…</p>
         ) : sections.length === 0 ? (
-          <p className="py-8 text-center text-sm text-muted">No sections yet. Add your first one below.</p>
+          <EmptyState
+            icon={MdOutlineRestaurantMenu}
+            title="No sections yet"
+            message="Start with a section like “Starters” or “Mandi”, then add items to it."
+          />
         ) : (
           sections.map((section, index) => (
             <SectionCard
@@ -103,9 +108,12 @@ export default function MenuPage() {
         <button
           type="button"
           onClick={() => setSectionSheet({})}
-          className="flex items-center justify-center gap-1.5 rounded-2xl border border-dashed border-line py-3 text-sm font-medium text-muted"
+          className="flex items-center justify-center gap-2 rounded-2xl border border-dashed border-line py-3 text-sm font-medium text-accent transition-colors active:bg-accent/5"
         >
-          <MdAdd size={18} /> Add section
+          <span className="flex h-6 w-6 items-center justify-center rounded-full bg-accent/12">
+            <MdAdd size={16} />
+          </span>
+          Add section
         </button>
       </div>
 

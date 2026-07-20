@@ -3,7 +3,7 @@ import { MdArrowUpward, MdArrowDownward } from "react-icons/md";
 
 export default function OfferCard({ offer, isFirst, isLast, onOpen, onMoveUp, onMoveDown }) {
   return (
-    <div className="flex items-center gap-3 rounded-2xl border border-line bg-surface p-3">
+    <div className="shadow-soft flex items-center gap-3 rounded-2xl border border-line/60 bg-surface p-3">
       <button type="button" onClick={onOpen} className="relative h-16 w-24 shrink-0 overflow-hidden rounded-xl bg-canvas">
         {offer.imageUrl ? (
           <LazyImage src={offer.imageUrl} alt="" sizes="96px" className="object-cover" />

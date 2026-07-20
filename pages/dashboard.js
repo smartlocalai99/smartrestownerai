@@ -1,5 +1,11 @@
 import { useCallback, useEffect, useState } from "react";
 import Head from "next/head";
+import {
+  MdOutlineAccountBalanceWallet,
+  MdOutlinePendingActions,
+  MdOutlineGroup,
+  MdOutlineTwoWheeler,
+} from "react-icons/md";
 import AppShell from "@/components/owner/AppShell";
 import PageHeader from "@/components/owner/PageHeader";
 import StatusPill from "@/components/owner/StatusPill";
@@ -118,13 +124,24 @@ export default function DashboardPage() {
               ) : null}
 
               <div className="grid grid-cols-2 gap-3">
-                <StatTile label="Cash collected" value={currency.format(metrics.cashCollected)} tone="success" />
-                <StatTile label="Cash pending" value={currency.format(metrics.cashPending)} tone="danger" />
-                <StatTile label="Total customers" value={totalCustomers} />
+                <StatTile
+                  label="Cash collected"
+                  value={currency.format(metrics.cashCollected)}
+                  tone="success"
+                  icon={MdOutlineAccountBalanceWallet}
+                />
+                <StatTile
+                  label="Cash pending"
+                  value={currency.format(metrics.cashPending)}
+                  tone={metrics.cashPending > 0 ? "danger" : "ink"}
+                  icon={MdOutlinePendingActions}
+                />
+                <StatTile label="Total customers" value={totalCustomers} icon={MdOutlineGroup} />
                 <StatTile
                   label="Riders available"
                   value={`${availableRiders}/${activeRiderCount}`}
-                  tone={availableRiders > 0 ? "success" : "danger"}
+                  tone={activeRiderCount === 0 ? "ink" : availableRiders > 0 ? "success" : "danger"}
+                  icon={MdOutlineTwoWheeler}
                 />
               </div>
 

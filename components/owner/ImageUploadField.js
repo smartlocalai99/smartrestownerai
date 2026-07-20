@@ -43,16 +43,22 @@ export default function ImageUploadField({ value, onChange, folder, label, aspec
   return (
     <div>
       {label ? <p className="mb-1.5 text-xs font-medium uppercase tracking-wide text-muted">{label}</p> : null}
-      <div className={`relative ${aspectClassName} w-full overflow-hidden rounded-2xl border border-line bg-canvas`}>
+      <div
+        className={`relative ${aspectClassName} w-full overflow-hidden rounded-2xl bg-canvas ${
+          value ? "shadow-soft border border-line/60" : "border border-dashed border-line"
+        }`}
+      >
         {value ? (
           <LazyImage src={value} alt="" sizes="240px" skeletonClassName="bg-canvas" className="object-cover" />
         ) : (
           <button
             type="button"
             onClick={() => inputRef.current?.click()}
-            className="flex h-full w-full flex-col items-center justify-center gap-1.5 text-muted"
+            className="flex h-full w-full flex-col items-center justify-center gap-2 text-muted transition-colors active:bg-surface-2"
           >
-            <MdOutlineAddPhotoAlternate size={28} />
+            <span className="flex h-9 w-9 items-center justify-center rounded-full bg-accent/12 text-accent">
+              <MdOutlineAddPhotoAlternate size={20} />
+            </span>
             <span className="text-xs">{isUploading ? "Uploading…" : "Add photo"}</span>
           </button>
         )}

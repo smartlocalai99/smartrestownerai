@@ -9,7 +9,7 @@ export default function RidersStrip({ riders }) {
   const activeRiders = riders.filter((rider) => rider.isActive);
 
   return (
-    <div className="rounded-2xl border border-line bg-surface p-4">
+    <div className="shadow-soft rounded-2xl border border-line/60 bg-surface p-4">
       <div className="mb-3 flex items-center justify-between">
         <p className="text-sm font-medium text-ink">Riders</p>
         <Link href="/profile/riders" className="text-xs text-muted underline underline-offset-2">
