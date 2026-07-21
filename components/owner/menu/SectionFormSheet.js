@@ -5,6 +5,7 @@ import Switch from "@/components/owner/Switch";
 export default function SectionFormSheet({ isOpen, onClose, initialSection, onSave, onDelete }) {
   const [title, setTitle] = useState("");
   const [isActive, setIsActive] = useState(true);
+  const [badgeText, setBadgeText] = useState("");
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState("");
 
@@ -13,6 +14,7 @@ export default function SectionFormSheet({ isOpen, onClose, initialSection, onSa
     setError("");
     setTitle(initialSection?.title ?? "");
     setIsActive(initialSection?.isActive ?? true);
+    setBadgeText(initialSection?.badgeText ?? "");
   }, [isOpen, initialSection]);
 
   async function handleSubmit(event) {
@@ -24,7 +26,7 @@ export default function SectionFormSheet({ isOpen, onClose, initialSection, onSa
     setIsSaving(true);
     setError("");
     try {
-      await onSave({ title: title.trim(), isActive });
+      await onSave({ title: title.trim(), isActive, badgeText: badgeText.trim() });
       onClose();
     } catch (err) {
       setError(err.message || "Couldn't save this section.");
@@ -46,6 +48,20 @@ export default function SectionFormSheet({ isOpen, onClose, initialSection, onSa
             className="input mt-1.5 normal-case"
             placeholder="Chicken Starters"
           />
+        </label>
+
+        <label className="block text-xs font-medium uppercase tracking-wide text-muted">
+          Badge text (optional)
+          <input
+            value={badgeText}
+            onChange={(e) => setBadgeText(e.target.value)}
+            className="input mt-1.5 normal-case"
+            placeholder="OFFER"
+          />
+          <span className="mt-1 block text-[11px] normal-case text-muted">
+            Shows as a small red highlight on this section&apos;s title in the customer app. Leave
+            blank to hide it.
+          </span>
         </label>
 
         {initialSection ? (

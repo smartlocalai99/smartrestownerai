@@ -13,6 +13,7 @@ const EMPTY = {
   isBestseller: false,
   isAvailable: true,
   prepTimeMinutes: "",
+  badgeText: "",
 };
 
 export default function ItemFormSheet({ isOpen, onClose, initialItem, onSave, onDelete }) {
@@ -34,6 +35,7 @@ export default function ItemFormSheet({ isOpen, onClose, initialItem, onSave, on
         isBestseller: initialItem.isBestseller,
         isAvailable: initialItem.isAvailable,
         prepTimeMinutes: initialItem.prepTimeMinutes != null ? String(initialItem.prepTimeMinutes) : "",
+        badgeText: initialItem.badgeText || "",
       });
     } else {
       setForm(EMPTY);
@@ -60,6 +62,7 @@ export default function ItemFormSheet({ isOpen, onClose, initialItem, onSave, on
         isBestseller: form.isBestseller,
         isAvailable: form.isAvailable,
         prepTimeMinutes: form.prepTimeMinutes ? Number(form.prepTimeMinutes) : null,
+        badgeText: form.badgeText.trim(),
       });
       onClose();
     } catch (err) {
@@ -124,6 +127,19 @@ export default function ItemFormSheet({ isOpen, onClose, initialItem, onSave, on
             />
           </Field>
         </div>
+
+        <Field label="Badge text (optional)">
+          <input
+            value={form.badgeText}
+            onChange={(e) => setForm((f) => ({ ...f, badgeText: e.target.value }))}
+            className="input"
+            placeholder="OFFER"
+          />
+          <span className="mt-1 block text-[11px] text-muted">
+            Shows as a small red highlight on this item in the customer app. Leave blank to hide
+            it.
+          </span>
+        </Field>
 
         <Field label="Prep time (minutes)">
           <input

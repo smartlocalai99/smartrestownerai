@@ -38,7 +38,7 @@ export default function MenuPage() {
     if (sectionSheet?.id) {
       await updateSection(sectionSheet.id, fields);
     } else {
-      await createSection(fields.title, sections.length);
+      await createSection(fields.title, sections.length, fields.badgeText);
     }
     await refresh();
   }
