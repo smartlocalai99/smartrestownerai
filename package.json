@@ -8,6 +8,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "test": "node --test tests/*.test.mjs",
     "db:link": "supabase link --project-ref uvrngxhovpzlxevkigoc",
     "db:push:dry": "supabase db push --linked --dry-run",
     "db:push": "supabase db push --linked"
