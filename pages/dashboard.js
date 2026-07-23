@@ -1,10 +1,12 @@
 import { useCallback, useEffect, useState } from "react";
 import Head from "next/head";
+import Link from "next/link";
 import {
   MdOutlineAccountBalanceWallet,
   MdOutlinePendingActions,
   MdOutlineGroup,
   MdOutlineTwoWheeler,
+  MdOutlineNotificationsNone,
 } from "react-icons/md";
 import AppShell from "@/components/owner/AppShell";
 import PageHeader from "@/components/owner/PageHeader";
@@ -84,15 +86,24 @@ export default function DashboardPage() {
         eyebrow="Mandi Kings"
         title="Dashboard"
         right={
-          profile ? (
-            profile.busyMode ? (
-              <StatusPill tone="danger">Busy</StatusPill>
-            ) : profile.isOpen ? (
-              <StatusPill tone="success">Open</StatusPill>
-            ) : (
-              <StatusPill tone="muted">Closed</StatusPill>
-            )
-          ) : null
+          <div className="flex items-center gap-2">
+            {profile ? (
+              profile.busyMode ? (
+                <StatusPill tone="danger">Busy</StatusPill>
+              ) : profile.isOpen ? (
+                <StatusPill tone="success">Open</StatusPill>
+              ) : (
+                <StatusPill tone="muted">Closed</StatusPill>
+              )
+            ) : null}
+            <Link
+              href="/notifications"
+              aria-label="Send notifications"
+              className="flex h-8 w-8 items-center justify-center rounded-full bg-surface-2 text-ink transition-colors active:bg-line"
+            >
+              <MdOutlineNotificationsNone size={18} />
+            </Link>
+          </div>
         }
       />
 
@@ -136,7 +147,9 @@ export default function DashboardPage() {
                   tone={metrics.cashPending > 0 ? "danger" : "ink"}
                   icon={MdOutlinePendingActions}
                 />
-                <StatTile label="Total customers" value={totalCustomers} icon={MdOutlineGroup} />
+                <Link href="/customers" className="block">
+                  <StatTile label="Total customers" value={totalCustomers} icon={MdOutlineGroup} />
+                </Link>
                 <StatTile
                   label="Riders available"
                   value={`${availableRiders}/${activeRiderCount}`}
